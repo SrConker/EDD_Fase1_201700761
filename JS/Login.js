@@ -6,16 +6,9 @@ function validar() {
 
     if (username == "Admin" && password == "1234") {
         alert("Login reconocido. Bienvenido Administrador")
-        window.location.replace()
-        return false
+        window.location.href = "../Vistas/MenuAdmin.html"
     } else {
-        intentos--
-        alert("Te quedan " + intentos + " intentos permitidos.")
-        if (intentos == 0) {
-            document.getElementById("username").disabled = true
-            document.getElementById("password").disabled = true
-            document.getElementById("submit").disabled = true
-            return false
-        }
+        alert("Nombre de usuario y/o contraseña inválidos, volver a intentarlo")
+        window.location.href = "../Vistas/Login.html"
     }
 }
