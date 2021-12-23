@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="StyleRegistrarCliente.css">  
+    <script src="../js/Clientes.js"></script> 
+    <script src="../js/circular-json.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
@@ -18,21 +21,26 @@
             <h2>Registrar</h2>
             <p class="hint-text">Formulario para registrar Cliente</p>
             <div class="form-group">
-                <input type="text" class="form-control" name="id" placeholder="ID" required="required">
+                <input type="text" class="form-control" id="idCliente" name="id" placeholder="ID" required="required">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="nombre" placeholder="Nombre Completo" required="required">
+                <input type="text" class="form-control" id="nombreCliente" name="nombre" placeholder="Nombre Completo" required="required">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" name="correo" placeholder="Correo" required="required">
+                <input type="email" class="form-control" id="correoCliente" name="correo" placeholder="Correo" required="required">
             </div>   
             <div class="form-group">
                 <label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-success btn-lg btn-block">Registrar Cliente</button>
-                <button type="button" class="btn btn-success btn-lg btn-block">Carga Masiva</button>
-                <button type="button" class="btn btn-success btn-lg btn-block">Salir</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="insertarLista()">Registrar Cliente</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="borrarEnLista()">Borrar Cliente</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="">Reporte de Clientes</button>
+                <form name="form-group" enctype="multipart/form-data">
+                    <input type="file"  class="btn btn-success btn-lg btn-block" value="Seleccionar Archivo" accept=".json" multiple>
+                    <input type="submit" id="archivoCliente" class="btn btn-succes btn-lg btn-block" onclick="cargaMasivaCliente()" value="Cargar Archivo">
+                </form>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='../Vistas/MenuAdmin.html'">Salir</button>
             </div>
         </form>
         <div class="text-center">Already have an account? <a href="#">Sign in</a></div>
