@@ -1,53 +1,51 @@
-class nodo_interno {
-    constructor(dia, hora, descripcion, x, y) {
-        this.dia = dia
-        this.hora = hora
-        this.descripcion = descripcion
-        this.x = x
-        this.y = y
+class nodo_interno{
+    constructor(valor,x,y){
+        this.valor = valor; //descripcion
+        this.x = x; //dia
+        this.y = y; //hora
         //apuntadores
-        this.siguiente = null
-        this.anterior = null
+        this.sig = null;
+        this.ant = null;
 
-        this.arriba = null
-        this.abajo = null
+        this.arriba = null;
+        this.abajo = null;
     }
 }
 
-class lista_interna {
-    constructor() {
-        this.primero = null
+class lista_interna{
+    constructor(){
+        this.primero = null;
     }
 
-    insertar_x (dia, hora, descripcion, x, y) { //para las X usamos siguiente y anterior, y el valor para comparar y ordenar es Y
-        let nuevo = new nodo_interno(dia, hora, descripcion, x, y)
+    insertar_x(valor, x,y){ //para las X usamos sig y ant, y el valor para compara y ordenar es Y
+        let nuevo = new nodo_interno(valor,x,y);
 
         if(this.primero == null){
-            this.primero = nuevo
-        } else {
-            if (nuevo.y < this.primero.y) {
-                nuevo.siguiente = this.primero
-                this.primero.anterior = nuevo
-                this.primero = nuevo
-            } else {
-                let aux = this.primero
-                while (aux != null) {
-                    if (nuevo.y < aux.y) {
-                        nuevo.siguiente = aux
-                        nuevo.anterior = aux.anterior
-                        aux.anterior.siguiente = nuevo
-                        aux.anterior = nuevo
-                        break
-                    } else if (nuevo.x == aux.x && nuevo.y == aux.y) {
-                        console.log("La posicion ya esta ocupada-> "+nuevo.x+","+nuevo.y)
-                        break
-                    } else {
-                        if (aux.siguiente == null) {
-                            aux.siguiente = nuevo
-                            nuevo.anterior = aux
-                            break
-                        } else {
-                            aux = aux.siguiente
+            this.primero = nuevo;
+        }else{
+            if(nuevo.y < this.primero.y){
+                nuevo.sig = this.primero;
+                this.primero.ant = nuevo;
+                this.primero = nuevo;
+            }else{
+                let aux = this.primero;
+                while(aux != null){
+                    if(nuevo.y < aux.y){
+                        nuevo.sig = aux;
+                        nuevo.ant = aux.ant;
+                        aux.ant.sig = nuevo;
+                        aux.ant= nuevo;
+                        break;
+                    }else if(nuevo.x == aux.x && nuevo.y == aux.y){
+                        console.log("La posicion ya esta ocupada-> "+nuevo.x+","+nuevo.y);
+                        break;
+                    }else{
+                        if(aux.sig ==null){
+                            aux.sig=nuevo;
+                            nuevo.ant = aux;
+                            break;
+                        }else{
+                            aux = aux.sig;
                         }
                     }
                 }
@@ -55,35 +53,35 @@ class lista_interna {
         }
     }
 
-    insertar_y (dia, hora, descripcion, x, y) { //para las Y usamos arriba y abajo, y el valor para comparar y ordenar es X
-        let nuevo = new nodo_interno(dia, hora, descripcion, x, y)
+    insertar_y(valor, x,y){ //para las Y usamos arriba y abajo, y el valor para compara y ordenar es X
+        let nuevo = new nodo_interno(valor,x,y);
 
-        if (this.primero == null) {
-            this.primero = nuevo
-        } else {
-            if (nuevo.x < this.primero.x) {
-                nuevo.abajo = this.primero
-                this.primero.arriba = nuevo
-                this.primero = nuevo
-            } else {
-                let aux = this.primero
-                while (aux != null) {
-                    if (nuevo.x < aux.x) {
-                        nuevo.abajo = aux
-                        nuevo.arriba = aux.arriba
-                        aux.arriba.abajo = nuevo
-                        aux.arriba = nuevo
-                        break
-                    } else if (nuevo.x == aux.x && nuevo.y == aux.y) {
-                        console.log("La posicion ya esta ocupada-> "+nuevo.x+","+nuevo.y)
-                        break
-                    } else {
-                        if (aux.abajo ==null) {
-                            aux.abajo=nuevo
-                            nuevo.arriba = aux
-                            break
-                        } else {
-                            aux = aux.abajo
+        if(this.primero == null){
+            this.primero = nuevo;
+        }else{
+            if(nuevo.x < this.primero.x){
+                nuevo.abajo = this.primero;
+                this.primero.arriba = nuevo;
+                this.primero = nuevo;
+            }else{
+                let aux = this.primero;
+                while(aux != null){
+                    if(nuevo.x < aux.x){
+                        nuevo.abajo = aux;
+                        nuevo.arriba = aux.arriba;
+                        aux.arriba.abajo = nuevo;
+                        aux.arriba= nuevo;
+                        break;
+                    }else if(nuevo.x == aux.x && nuevo.y == aux.y){
+                        console.log("La posicion ya esta ocupada-> "+nuevo.x+","+nuevo.y);
+                        break;
+                    }else{
+                        if(aux.abajo ==null){
+                            aux.abajo=nuevo;
+                            nuevo.arriba = aux;
+                            break;
+                        }else{
+                            aux = aux.abajo;
                         }
                     }
                 }
@@ -91,18 +89,18 @@ class lista_interna {
         }
     }
 
-    recorrer_x() {
-        let aux = this.primero
-        while (aux != null) {
-            console.log("dia =",aux.dia,"hora =",aux.hora,"descripcion =",aux.descripcion," - x = ",aux.x , " y = ",aux.y)
-            aux = aux.siguiente
+    recorrer_x(){
+        let aux = this.primero;
+        while(aux != null){
+            console.log("valor =",aux.valor," - x = ",aux.x , " y = ",aux.y);
+            aux = aux.sig;
         }
     }
-    recorrer_y() {
-        let aux = this.primero
-        while (aux != null) {
-            console.log("dia =",aux.dia,"hora =",aux.hora,"descripcion =",aux.descripcion," - x = ",aux.x , " y = ",aux.y)
-            aux = aux.abajo
+    recorrer_y(){
+        let aux = this.primero;
+        while(aux != null){
+            console.log("valor =",aux.valor," - x = ",aux.x , " y = ",aux.y);
+            aux = aux.abajo;
         }
     }
 }
@@ -111,8 +109,8 @@ class lista_interna {
 class nodo_cabecera{
     constructor(dato){
         this.dato = dato;
-        this.siguiente= null;
-        this.anterior = null;
+        this.sig= null;
+        this.ant = null;
         this.lista_interna = new lista_interna();
     }
 }
@@ -128,25 +126,25 @@ class lista_cabecera{
             this.primero = nuevo;
         }else{
             if(nuevo.dato<this.primero.dato){
-                nuevo.siguiente = this.primero;
-                this.primero.anterior=nuevo;
+                nuevo.sig = this.primero;
+                this.primero.ant=nuevo;
                 this.primero = nuevo;
             }else{
                 let aux = this.primero;
                 while(aux != null){
                     if(nuevo.dato < aux.dato){
-                        nuevo.siguiente = aux;
-                        nuevo.anterior = aux.anterior;
-                        aux.anterior.siguiente = nuevo;
-                        aux.anterior = nuevo;
+                        nuevo.sig = aux;
+                        nuevo.ant = aux.ant;
+                        aux.ant.sig = nuevo;
+                        aux.ant = nuevo;
                         break;
                     }else{
-                        if(aux.siguiente == null){
-                            aux.siguiente = nuevo;
-                            nuevo.anterior = aux;
+                        if(aux.sig == null){
+                            aux.sig = nuevo;
+                            nuevo.ant = aux;
                             break;
                         }else{
-                            aux = aux.siguiente;
+                            aux = aux.sig;
                         }
                     }
                 }
@@ -160,7 +158,7 @@ class lista_cabecera{
             if(aux.dato == dato){
                 return aux;
             }else{
-                aux = aux.siguiente;
+                aux = aux.sig;
             }
         }
         return null;
@@ -170,7 +168,7 @@ class lista_cabecera{
         let aux = this.primero;
         while(aux != null){
             console.log("dato =",aux.dato);
-            aux = aux.siguiente;
+            aux = aux.sig;
         }
     }
 }
@@ -210,9 +208,9 @@ class matriz{
             let aux2 = aux.lista_interna.primero;
             while(aux2!= null){
                 console.log("       -"+aux2.valor);
-                aux2 = aux2.siguiente;
+                aux2 = aux2.sig;
             }
-            aux = aux.siguiente;
+            aux = aux.sig;
         }
 
         console.log("cabeceras en Y");
@@ -224,7 +222,7 @@ class matriz{
                 console.log("       -"+aux2.valor);
                 aux2 = aux2.abajo;
             }
-            aux = aux.siguiente;
+            aux = aux.sig;
         }
     }
 
@@ -239,13 +237,13 @@ class matriz{
         let aux_x = this.cabecetas_x.primero;
         while(aux_x!=null){
             cadena+="node[label = "+aux_x.dato+" fillcolor=\" azure1\" pos = \""+aux_x.dato+",1!\"]x"+aux_x.dato+";\n"
-            aux_x = aux_x.siguiente;
+            aux_x = aux_x.sig;
         }
         aux_x = this.cabecetas_x.primero;
-        while(aux_x.siguiente != null){
-            cadena+="x"+aux_x.dato+"->"+"x"+aux_x.siguiente.dato+";\n"
-            cadena+="x"+aux_x.siguiente.dato+"->"+"x"+aux_x.dato+";\n"
-            aux_x = aux_x.siguiente;
+        while(aux_x.sig != null){
+            cadena+="x"+aux_x.dato+"->"+"x"+aux_x.sig.dato+";\n"
+            cadena+="x"+aux_x.sig.dato+"->"+"x"+aux_x.dato+";\n"
+            aux_x = aux_x.sig;
         }
 
         if(this.cabecetas_x.primero!= null){
@@ -255,13 +253,13 @@ class matriz{
         let aux_y = this.cabecetas_y.primero;
         while(aux_y!=null){
             cadena+="node[label = "+aux_y.dato+" fillcolor=\" azure1\" pos = \"-1,-"+aux_y.dato+"!\"]y"+aux_y.dato+";\n"
-            aux_y = aux_y.siguiente;
+            aux_y = aux_y.sig;
         }
         aux_y = this.cabecetas_y.primero;
-        while(aux_y.siguiente != null){
-            cadena+="y"+aux_y.dato+"->"+"y"+aux_y.siguiente.dato+";\n"
-            cadena+="y"+aux_y.siguiente.dato+"->"+"y"+aux_y.dato+";\n"
-            aux_y = aux_y.siguiente;
+        while(aux_y.sig != null){
+            cadena+="y"+aux_y.dato+"->"+"y"+aux_y.sig.dato+";\n"
+            cadena+="y"+aux_y.sig.dato+"->"+"y"+aux_y.dato+";\n"
+            aux_y = aux_y.sig;
         }
 
         if(this.cabecetas_x.primero!= null){
@@ -273,21 +271,21 @@ class matriz{
             let aux = aux_x.lista_interna.primero;
             while(aux!=null){
                 cadena+="   node[label = "+aux.valor+" fillcolor=\" gold2\" pos = \""+aux.x+",-"+aux.y+"!\"]x"+aux.x+"y"+aux.y+";\n"
-                aux = aux.siguiente;
+                aux = aux.sig;
             }
 
             //graficar flechitas
             aux = aux_x.lista_interna.primero;
-            while(aux.siguiente!= null){
-                cadena+="   x"+aux.x+"y"+aux.y+"->x"+aux.siguiente.x+"y"+aux.siguiente.y+";\n";
-                cadena+="   x"+aux.siguiente.x+"y"+aux.siguiente.y+"->x"+aux.x+"y"+aux.y+";\n";
-                aux= aux.siguiente;
+            while(aux.sig!= null){
+                cadena+="   x"+aux.x+"y"+aux.y+"->x"+aux.sig.x+"y"+aux.sig.y+";\n";
+                cadena+="   x"+aux.sig.x+"y"+aux.sig.y+"->x"+aux.x+"y"+aux.y+";\n";
+                aux= aux.sig;
             }
             if(aux_x.lista_interna.primero!= null){
                 cadena+="x"+aux_x.dato+"->"+"x"+aux_x.lista_interna.primero.x+"y"+aux_x.lista_interna.primero.y+";\n";
             }
 
-            aux_x = aux_x.siguiente;
+            aux_x = aux_x.sig;
         }
 
         aux_y = this.cabecetas_y.primero;
@@ -302,7 +300,7 @@ class matriz{
             if(aux_y.lista_interna.primero!= null){
                 cadena+="y"+aux_y.dato+"->"+"x"+aux_y.lista_interna.primero.x+"y"+aux_y.lista_interna.primero.y+";\n";
             }
-            aux_y = aux_y.siguiente;
+            aux_y = aux_y.sig;
         }
 
         cadena+= "\n}"
@@ -313,13 +311,29 @@ class matriz{
 
 let matriz1 = new matriz();
 
-matriz1.insertar(0,0,0);
-matriz1.insertar(50,0,1);
-matriz1.insertar(5,1,1);
-matriz1.insertar(6,2,3);
-matriz1.insertar(1,10,1);
-matriz1.insertar(2,1,2);
-matriz1.insertar(7,3,3);
+function imprimirMatriz() {
+    matriz1.recorrer_matriz()
+}
 
-matriz1.recorrer_matriz();
-matriz1.graficar_matriz();
+function recuperarMatriz() {
+    var matrizTemporal = JSON.parse(sessionStorage.getItem("matriz"))
+    matriz1 = new matriz()
+    matrizTemporal = CircularJSON.parse(matrizTemporal)
+    Object.assign(matriz1, matrizTemporal)
+}
+
+function insertarMatriz() {
+    let diaNuevo = document.getElementById("diaCalendario").value
+    let horaNuevo = document.getElementById("horaCalendario").value
+    let descripcionNuevo = document.getElementById("descripcionCalendario").value
+    matriz1.insertar(descripcionNuevo, diaNuevo, horaNuevo)
+    alert("Evento agregado exitosamente")
+    document.getElementById("diaCalendario").value = ""
+    document.getElementById("horaCalendario").value = ""
+    document.getElementById("descripcionCalendario").value = ""
+    imprimirMatriz()
+}
+
+function graficar() {
+    matriz1.graficar_matriz()
+}

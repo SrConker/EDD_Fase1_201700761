@@ -6,7 +6,7 @@ class Nodo {
     }
 }
 
-class ListaDobleClientes {
+class ListaDobleMeses {
     constructor() {
         this.primero = null
         this.longitud = 0
@@ -44,4 +44,56 @@ class ListaDobleClientes {
             aux = aux.siguiente
         }
     }
+
+    borrar(mes) {
+        if (this.primero.mes == mes) {
+            this.primero = this.primero.siguiente
+            this.longitud--
+            if (this.primero != null) {
+                this.primero.anterior = null
+            }
+        } else {
+            let aux = this.primero
+            while (aux.siguiente.mes) {
+                if (aux.siguiente.mes == mes) {
+                    aux.siguiente = aux.siguiente.siguiente
+                    this.longitud--
+                    if (aux.siguiente != null) {
+                        aux.siguiente.anterior = aux
+                    }
+                    break
+                }
+                aux = aux.siguiente
+            }
+        }
+    }
+}
+
+let listaMeses = new ListaDobleMeses()
+
+function imprimirLista() {
+    listaMeses.mostrar()
+}
+
+function recuperarLista() {
+    var listaTemporal = JSON.parse(sessionStorage.getItem("ListaDobleMeses"))
+    listaMeses = new ListaDobleMeses()
+    listaTemporal = CircularJSON.parse(listaTemporal)
+    Object.assign(listaMeses, listaTemporal)
+}
+
+function insertarLista() {
+    let mesNuevo = document.getElementById("mesCalendario").value
+    listaMeses.insertar(mesNuevo)
+    alert("Mes ingresado correctamente")
+    document.getElementById("mesCalendario").value = ""
+    imprimirLista()
+}
+
+function borrarLista() {
+    let mesBuscar = document.getElementById("mesCalendario").value
+    listaMeses.borrar(mesBuscar)
+    alert("Mes borrado correctamente")
+    document.getElementById("mesCalendario").value = ""
+    imprimirLista()
 }
