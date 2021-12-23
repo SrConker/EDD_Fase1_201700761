@@ -105,6 +105,7 @@ function insertarLista() {
     let nombreNuevo = document.getElementById("nombreCliente").value
     let correoNuevo = document.getElementById("correoCliente").value
     listaClientes.insertar(idNuevo, nombreNuevo, correoNuevo)
+    alert("Cliente ingresado correctamente")
     document.getElementById("idCliente").value = ""
     document.getElementById("nombreCliente").value = ""
     document.getElementById("correoCliente").value = ""
@@ -114,38 +115,32 @@ function insertarLista() {
 function borrarEnLista() {
     let idBuscar = document.getElementById("idCliente").value
     listaClientes.borrar(idBuscar)
+    alert("Cliente borrado correctamente")
     document.getElementById("idCliente").value = ""
     document.getElementById("nombreCliente").value = ""
     document.getElementById("correoCliente").value = ""
     imprimirLista()
 }
 
-function leerArchivo(file) {
-    const reader = new FileReader()
-    reader.onload = function () {
-        let contenido = reader.result
-        console.log(typeof (reader.result))
-        console.log(reader.result)
-        var objcliente = JSON.parse(contenido)
-        console.log(objcliente, typeof (objcliente))
-        for (let value of objcliente.listaClientes) {
-            console.log(value)
-            var idClientejson = parseInt(value.id)
-            var nombreClientejson = value.nombre
-            var correoClientejson = value.correo
-            listaClientes.insertar(idClientejson, nombreClientejson, correoClientejson)
-            console.log(idClientejson, nombreClientejson, correoClientejson)
+function leerArchivoClientes(e) {
+    var archivo = e.target.files[0]
+    if (!archivo) {
+        return
+    }
+
+    var lector = new FileReader()
+    lector.onload = function(e) {
+        let contenido = e.target.result
+
+        const obj = JSON.parse(contenido)
+        for (let clave in obj) {
+            for (let j of obj[clave]) {
+                console.log(j.id)
+                for (let k of j.clientes) {
+                    listaClientes.insertar(k.id, k.nombre, k.correo)
+                }
+            }
         }
     }
-    reader.readAsText(file)
-}
-
-function cargaMasivaCliente() {
-    var data = document.getElementById("archivoClientes").files
-    if (!data.length) {
-        alert("No se ha seleccionado el archivo")
-    } else {
-        var cadena = leerArchivo(data[0])
-        console.log(cadena)
-    }
+    lector.readAsText(archivo)
 }

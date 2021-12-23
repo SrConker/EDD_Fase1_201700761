@@ -1,11 +1,10 @@
 class nodo{
-    constructor(id, nombre, edad, correo, password, username){
+    constructor(id, nombre, edad, correo, password){
         this.id = id
         this.nombre = nombre
         this.edad = edad
         this.correo = correo
         this.password = password
-        this.username = username
         this.izquierda = null
         this.derecha = null
         this.altura = 0
@@ -17,8 +16,8 @@ class AVL{
         this.raiz = null;
     }
 
-    insertar(id, nombre, edad, correo, password, username){
-        let nuevo = new nodo(id, nombre, correo, password, username);
+    insertar(id, nombre, edad, correo, password){
+        let nuevo = new nodo(id, nombre, edad, correo, password);
 
         if (this.raiz == null) {
             this.raiz= nuevo
@@ -150,6 +149,7 @@ class AVL{
         }
     }
 
+
     generarDot() {
         let cadena="digraph arbol {\n"
         cadena += this.generarNodos(this.raiz)
@@ -163,12 +163,7 @@ class AVL{
     generarNodos(raizActual) { //metodo preorden
         let nodos ="";
         if (raizActual != null) {
-            nodos += "n"+raizActual.id+"[label=\""+raizActual.id+"\"]\n"
-            nodos += "n"+raizActual.nombre+"[label=\""+raizActual.nombre+"\"]\n"
-            nodos += "n"+raizActual.edad+"[label=\""+raizActual.edad+"\"]\n"
-            nodos += "n"+raizActual.correo+"[label=\""+raizActual.correo+"\"]\n"
-            nodos += "n"+raizActual.password+"[label=\""+raizActual.password+"\"]\n"
-            nodos += "n"+raizActual.username+"[label=\""+raizActual.username+"\"]\n"
+            nodos += "n"+raizActual.id+"[label=\""+raizActual.id+", "+ raizActual.nombre+ ", " + raizActual.edad+ ", "+ raizActual.correo+ ", " +raizActual.password +"\"]\n"
             nodos += this.generarNodos(raizActual.izquierda)
             nodos += this.generarNodos(raizActual.derecha)
         }
@@ -183,23 +178,64 @@ class AVL{
             //validaciones
             if (raizActual.izquierda != null) {
                 cadena+="n"+raizActual.id + "-> n"+raizActual.izquierda.id+"\n"
-                cadena+="n"+raizActual.nombre + "-> n"+raizActual.izquierda.nombre+"\n"
-                cadena+="n"+raizActual.edad + "-> n"+raizActual.izquierda.edad+"\n"
-                cadena+="n"+raizActual.correo + "-> n"+raizActual.izquierda.correo+"\n"
-                cadena+="n"+raizActual.password + "-> n"+raizActual.izquierda.password+"\n"
-                cadena+="n"+raizActual.username + "-> n"+raizActual.izquierda.username+"\n"
             }
             if (raizActual.derecha != null) {
                 cadena+="n"+raizActual.id + "-> n"+raizActual.derecha.id+"\n"
-                cadena+="n"+raizActual.nombre + "-> n"+raizActual.derecha.nombre+"\n"
-                cadena+="n"+raizActual.edad + "-> n"+raizActual.derecha.edad+"\n"
-                cadena+="n"+raizActual.correo + "-> n"+raizActual.derecha.correo+"\n"
-                cadena+="n"+raizActual.password + "-> n"+raizActual.derecha.password+"\n"
-                cadena+="n"+raizActual.username + "-> n"+raizActual.derecha.username+"\n"
             }
-
-            
         }
         return cadena;
     }
+}
+
+let avlEmpleados = new AVL()
+
+function recuperarAVL() {
+    var arbolTemporal = JSON.parse(sessionStorage.getItem("AVL"))
+    avlEmpleados = new AVL()
+    arbolTemporal = CircularJSON.parse(arbolTemporal)
+    Object.assign(avlEmpleados, arbolTemporal)
+}
+
+function insertarArbol() {
+    let idNuevo = document.getElementById("idVendedor").value
+    let nombreNuevo = document.getElementById("nombreVendedor").value
+    let edadNuevo = document.getElementById("edadVendedor").value
+    let correoNuevo = document.getElementById("correoVendedor").value
+    let passwordNuevo = document.getElementById("passwordVendedor").value
+    avlEmpleados.insertar(idNuevo, nombreNuevo, edadNuevo, correoNuevo, passwordNuevo)
+    alert("Vendedor ingresado correctamente")
+    document.getElementById("idVendedor").value = ""
+    document.getElementById("nombreVendedor").value = ""
+    document.getElementById("edadVendedor").value = ""
+    document.getElementById("correoVendedor").value = ""
+    document.getElementById("passwordVendedor").value = ""
+}
+
+function borrarArbol() {
+
+}
+
+function leerArchivoVendedores(e) {
+    var archivo = e.target.files[0]
+    if (!archivo) {
+        return
+    }
+
+    var lector = new FileReader()
+    lector.onload = function(e) {
+        let contenido = e.target.result
+
+        const obj = JSON.parse(contenido)
+        for (let clave in obj) {
+            for (let j of obj[clave]) {
+                console.log(j.id)
+                avlEmpleados.insertar(j.id, j.nombre, j.edad, j.correo, j.password)
+            }
+        }
+    }
+    lector.readAsText(archivo)
+}
+
+function graficar() {
+    avlEmpleados.generarDot()
 }

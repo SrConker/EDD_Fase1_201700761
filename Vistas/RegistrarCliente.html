@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body onload="recuperarLista()">
     <div class="signup-form">
         <form action="/examples/actions/confirmation.php" method="post">
             <h2>Registrar</h2>
@@ -36,9 +36,9 @@
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="insertarLista()">Registrar Cliente</button>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="borrarEnLista()">Borrar Cliente</button>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="">Reporte de Clientes</button>
-                <form name="form-group" enctype="multipart/form-data">
-                    <input type="file"  class="btn btn-success btn-lg btn-block" value="Seleccionar Archivo" accept=".json" multiple>
-                    <input type="submit" id="archivoCliente" class="btn btn-succes btn-lg btn-block" onclick="cargaMasivaCliente()" value="Cargar Archivo">
+                <form name="" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="fileposter" class="btn btn-success btn-lg btn-block" value="Seleccionar Archivo" accept=".json" multiple>
+                    <input type="submit" id="submitFiles" class="btn btn-success btn-lg btn-block" onclick="leerArchivoClientes()" value="Cargar Archivo">
                 </form>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='../Vistas/MenuAdmin.html'">Salir</button>
             </div>

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="StyleRegistrarVendedor.css">  
+    <script src="../js/Empleados.js"></script> 
+    <script src="../js/circular-json.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
@@ -18,26 +20,31 @@
             <h2>Registrar</h2>
             <p class="hint-text">Formulario para registrar Vendedor</p>
             <div class="form-group">
-                <input type="text" class="form-control" name="id" placeholder="ID" required="required">
+                <input type="text" class="form-control" id="idVendedor" name="id" placeholder="ID" required="required">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="nombre" placeholder="Nombre Completo" required="required">
+                <input type="text" class="form-control" id="nombreVendedor" name="nombre" placeholder="Nombre Completo" required="required">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="edad" placeholder="Edad" required="required">
+                <input type="text" class="form-control" id="edadVendedor" name="edad" placeholder="Edad" required="required">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" name="correo" placeholder="Correo" required="required">
+                <input type="email" class="form-control" id="correoVendedor" name="correo" placeholder="Correo" required="required">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                <input type="password" class="form-control" id="passwordVendedor" name="password" placeholder="Password" required="required">
             </div>        
             <div class="form-group">
                 <label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-success btn-lg btn-block">Registrar Vendedor</button>
-                <button type="button" class="btn btn-success btn-lg btn-block">Carga Masiva</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="insertarArbol()">Registrar Vendedor</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="borrarArbol()">Borrar Proveedor</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" onclick="graficar()">Reporte de Proveedores</button>
+                <form name="" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="fileposter" class="btn btn-success btn-lg btn-block" value="Seleccionar Archivo" accept=".json" multiple>
+                    <input type="submit" id="submitFiles" class="btn btn-success btn-lg btn-block" onclick="leerArchivoVendedores()" value="Cargar Archivo">
+                </form>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='../Vistas/MenuAdmin.html'">Salir</button>
             </div>
         </form>
