@@ -6,9 +6,9 @@ function validar() {
 
     if (username == "Admin" && password == "1234") {
         alert("Login reconocido. Bienvenido Administrador")
-        window.location.href = "../Vistas/MenuFases.html"
+        window.location.href = "MenuFases.html"
     } else {
         alert("Nombre de usuario y/o contraseña inválidos, volver a intentarlo")
-        window.location.href = "../docs/index.html"
+        window.location.href = "index.html"
     }
 }
