@@ -108,14 +108,14 @@ class Hash {
             if (this.claves[i] != null) {
                 contador += 1
                 console.log("--> " + this.claves[i].idV)
-                cadenaTabla += "\n<tr>\n\t<td>"+contador+" | "+" Id: " + this.claves[i].idV + " | " + " Vendedor: " + this.claves[i].nombreV + " | " + " Cliente: " + this.claves[i].nombreC + " | " + " Total: " + this.claves[i].total + " | " + "Lista: " + this.claves[i].lista + " |</td>\n</tr>\n"
+                cadenaTabla += "\n<tr>\n\t<td>"+contador+" | "+" Id: " + this.claves[i].idV + " Vendedor: " + this.claves[i].nombreV + " Cliente: " + this.claves[i].nombreC + " Total: " + this.claves[i].total +" Lista: " + this.claves[i].lista + " |</td>\n</tr>\n"
             } else {
                 contador += 1
                 console.log("--------------------")
                 cadenaTabla += "\n<tr>\n\t<td>"+contador+" |</td>\n</tr>\n"
             }
         }
-        const elemento = document.getElementById("mynetwork")
+        const elemento = document.getElementById("contenido-dot")
         elemento.innerHTML = cadenaTabla
         console.log(cadenaTabla)
     }

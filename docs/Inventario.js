@@ -326,7 +326,7 @@ class ArbolB {
                 contador++;
                 aux = aux.siguiente;
             }
-            cadena+="\n"+raiz_actual_txt+":p"+contador+"->"+this.graficarEnlaces(raiz_actual.claves.ultimo.derecha);
+            cadena+="\n"+raiz_actual_txt+":p"+contador+"->"+this.graficarEnlaces(raizActual.claves.ultimo.derecha);
             return cadena;
         }
     }
