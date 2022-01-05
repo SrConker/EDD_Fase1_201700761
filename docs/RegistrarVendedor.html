@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="StyleRegistrarVendedor.css">  
-    <script src="Empleados.js"></script> 
-    <script src="circular-json.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
@@ -41,14 +39,17 @@
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="insertarArbol()">Registrar Vendedor</button>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="borrarArbol()">Borrar Proveedor</button>
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="graficar()">Reporte de Proveedores</button>
-                <form name="" method="POST" enctype="multipart/form-data">
-                    <input type="file" id="fileposter" class="btn btn-success btn-lg btn-block" value="Seleccionar Archivo" accept=".json" multiple>
-                    <input type="submit" id="submitFiles" class="btn btn-success btn-lg btn-block" onclick="leerArchivoVendedores()" value="Cargar Archivo">
-                </form>
+                <input type="file" class="btn btn-success btn-lg btn-block" id="archivo1" placeholder="Seleccionar archivo">
                 <button type="button" class="btn btn-success btn-lg btn-block" onclick="window.location.href='MenuAdmin.html'">Salir</button>
             </div>
         </form>
         <div class="text-center">Already have an account? <a href="#">Sign in</a></div>
     </div>
-    </body>
+    <div id="mynetwork"></div>
+    <div class="form-group">
+        <label class="hint-text" id="contenido-dot"></label>
+    </div>
+    <script src="Empleados.js"></script> 
+    <script src="circular-json.js"></script>
+</body>
 </html>

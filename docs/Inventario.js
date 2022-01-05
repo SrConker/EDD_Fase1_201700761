@@ -268,6 +268,10 @@ class ArbolB {
         cadena+=  this.graficarEnlaces(this.raiz);
         cadena+="}\n"
 
+        const elemento = document.getElementById("contenido-dot")
+        elemento.innerHTML = cadena
+        console.log(cadena)
+
         return cadena; 
     }
 
@@ -280,7 +284,7 @@ class ArbolB {
             let aux = raizActual.claves.primero;
             while(aux!=null){
                 contador++;
-                cadena+="|{"+aux.id+"}|<p"+contador+"> ";
+                cadena+="|{"+aux.id+","+aux.nombre+","+aux.precio+","+aux.cantidad+"}|<p"+contador+"> ";
                 aux= aux.siguiente;
             }
             cadena+="\"]"+raizActual.claves.primero.id+";\n";
@@ -291,7 +295,7 @@ class ArbolB {
             let aux = raizActual.claves.primero;
             while(aux!=null){
                 contador++;
-                cadena+="|{"+aux.id+"}|<p"+contador+"> ";
+                cadena+="|{"+aux.id+","+aux.nombre+","+aux.precio+","+aux.cantidad+"}|<p"+contador+"> ";
                 aux= aux.siguiente;
             }
             cadena+="\"]"+raizActual.claves.primero.id+";\n";
@@ -327,3 +331,45 @@ class ArbolB {
         }
     }
 }
+
+let inventario = new ArbolB()
+
+function insertarArbol() {
+    let idNuevo = document.getElementById("idInventario").value
+    let nombreNuevo = document.getElementById("nombreInventario").value
+    let precioNuevo = document.getElementById("precioInventario").value
+    let cantidadNuevo = document.getElementById("cantidadInventario").value
+    inventario.insertarNodo(idNuevo, nombreNuevo, precioNuevo, cantidadNuevo)
+    alert("Inventario ingresado correctamente")
+    document.getElementById("idInventario").value = ""
+    document.getElementById("nombreInventario").value = ""
+    document.getElementById("precioInventario").value = ""
+    document.getElementById("cantidadInventario").value = ""
+}
+
+function graficar() {
+    inventario.graficar()
+}
+
+function leerArchivoJSON(e) {
+    const archivo = e.target.files[0]
+    if (!archivo) {
+        return
+    }
+    const lector = new FileReader()
+    lector.onload = function(e) {
+        const contenido = e.target.result
+        var json = JSON.parse(contenido)
+        for (let fila in json) {
+            console.log(fila)
+            for (let j of json[fila]) {
+                console.log(j)
+                inventario.insertarNodo(j.id.toString(), j.nombre, j.precio.toString(), j.cantidad.toString())
+            }
+        }
+    }
+    lector.readAsText(archivo)
+    alert("Archivo JSON compilado y datos agregados correctamente")
+}
+
+document.querySelector('#archivo1').addEventListener('change', leerArchivoJSON, false)

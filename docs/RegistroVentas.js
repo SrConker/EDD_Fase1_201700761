@@ -1,8 +1,10 @@
 class Nodo {
-    constructor(idV, nombreV, nombreC) {
+    constructor(idV, nombreV, nombreC, total, lista) {
         this.idV = idV
         this.nombreV = nombreV
         this.nombreC = nombreC
+        this.total = total
+        this.lista = lista
     }
 }
 
@@ -100,12 +102,94 @@ class Hash {
     }
 
     recorrer() {
+        let cadenaTabla = ""
+        let contador = -1
         for (var i = 0; i < this.size; i++) {
             if (this.claves[i] != null) {
+                contador += 1
                 console.log("--> " + this.claves[i].idV)
+                cadenaTabla += "\n<tr>\n\t<td>"+contador+" | "+" Id: " + this.claves[i].idV + " | " + " Vendedor: " + this.claves[i].nombreV + " | " + " Cliente: " + this.claves[i].nombreC + " | " + " Total: " + this.claves[i].total + " | " + "Lista: " + this.claves[i].lista + " |</td>\n</tr>\n"
             } else {
+                contador += 1
                 console.log("--------------------")
+                cadenaTabla += "\n<tr>\n\t<td>"+contador+" |</td>\n</tr>\n"
             }
         }
+        const elemento = document.getElementById("mynetwork")
+        elemento.innerHTML = cadenaTabla
+        console.log(cadenaTabla)
     }
 }
+
+class Producto {
+    constructor(id, nombre, precio, cantidad) {
+        this.id = id
+        this.nombre = nombre
+        this.precio = precio
+        this.cantidad = cantidad
+    }
+}
+
+let hash = new Hash()
+let lista = new Array()
+
+function insertarHash() {
+    let idVenta = document.getElementById("idVenta").value
+    let nombreVendedor = document.getElementById("nombreVendedor").value
+    let nombreCliente = document.getElementById("nombreCliente").value
+    let totalVenta = document.getElementById("totalVenta").value
+    let idProducto = document.getElementById("idInventario").value
+    let nombreProducto = document.getElementById("nombreInventario").value
+    let precioProducto = document.getElementById("precioInventario").value
+    let cantidadProducto = document.getElementById("cantidadInventario").value
+    if (lista.length == 0) { //Si la lista no tiene nada dentro
+        let producto = new Producto(idProducto, nombreProducto, precioProducto, cantidadProducto)
+        lista = new Array()
+        lista.push(producto)
+    } else {
+        let producto = new Producto(idProducto, nombreProducto, precioProducto, cantidadProducto)
+        lista.push(producto)
+    }
+    let ventaNueva = new Nodo(idVenta, nombreVendedor, nombreCliente, totalVenta, lista)
+    hash.insertar(ventaNueva)
+    alert("Venta ingresada correctamente")
+    document.getElementById("nombreVendedor").value = ""
+    document.getElementById("nombreCliente").value = ""
+    document.getElementById("totalVenta").value = ""
+    document.getElementById("idInventario").value = ""
+    document.getElementById("nombreInventario").value = ""
+    document.getElementById("precioInventario").value = ""
+    document.getElementById("cantidadInventario").value = ""
+}
+
+function graficar1() {
+    hash.recorrer()
+}
+
+function leerArchivoJSON(e) {
+    const archivo = e.target.files[0]
+    if (!archivo) {
+        return
+    }
+    const lector = new FileReader()
+    lector.onload = function(e) {
+        const contenido = e.target.result
+        var json = JSON.parse(contenido)
+        for (x of json.ventas) {
+            let total = 0
+            let lista = new Array()
+            for (z of x.productos) {
+                console.log(z.cantidad)
+                total += z.precio * z.cantidad
+                let producto = new Producto(z.id, z.nombreC, z.precio, z.cantidad)
+                lista.push(producto)
+            }
+            let ventaNueva = new Nodo(x.id, x.vendedor, x.cliente, total, lista)
+            hash.insertar(ventaNueva)
+        }
+    }
+    lector.readAsText(archivo)
+    alert("Archivo JSON compilado y datos agregados correctamente")
+}
+
+document.querySelector('#archivo1').addEventListener('change', leerArchivoJSON, false)

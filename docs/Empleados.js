@@ -149,15 +149,31 @@ class AVL{
         }
     }
 
-
     generarDot() {
         let cadena="digraph arbol {\n"
         cadena += this.generarNodos(this.raiz)
         cadena +="\n"
         cadena += this.enlazar(this.raiz);
         cadena += "\n}"
-
+        const elemento = document.getElementById("contenido-dot")
+        elemento.innerHTML = cadena
         console.log(cadena);
+
+        var container = document.getElementById("mynetwork")
+        var parseddata = vis.network.convertDot(cadena)
+        var data = {
+            nodes: parseddata.nodes,
+            edges: parseddata.edges
+        }
+        var options = parseddata.options
+        options.layout = {
+            hierarchical: {
+                sortMethod: 'directed',
+                shakeTowards: 'roots',
+                directions: 'DU'
+            }
+        }
+        var network = new vis.Network(container, data, options)
     }
 
     generarNodos(raizActual) { //metodo preorden
@@ -215,27 +231,29 @@ function borrarArbol() {
 
 }
 
-function leerArchivoVendedores(e) {
-    var archivo = e.target.files[0]
+function graficar() {
+    avlEmpleados.generarDot()
+}
+
+function leerArchivoJSON(e) {
+    const archivo = e.target.files[0]
     if (!archivo) {
         return
     }
-
-    var lector = new FileReader()
+    const lector = new FileReader()
     lector.onload = function(e) {
-        let contenido = e.target.result
-
-        const obj = JSON.parse(contenido)
-        for (let clave in obj) {
-            for (let j of obj[clave]) {
-                console.log(j.id)
+        const contenido = e.target.result
+        var json = JSON.parse(contenido)
+        for (let fila in json) {
+            console.log(fila)
+            for (let j of json[fila]) {
+                console.log(j)
                 avlEmpleados.insertar(j.id, j.nombre, j.edad, j.correo, j.password)
             }
         }
     }
     lector.readAsText(archivo)
+    alert("Archivo JSON compilado y datos agregados correctamente")
 }
 
-function graficar() {
-    avlEmpleados.generarDot()
-}
+document.querySelector('#archivo1').addEventListener('change', leerArchivoJSON, false)
