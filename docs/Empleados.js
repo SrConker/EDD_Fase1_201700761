@@ -152,13 +152,13 @@ class AVL{
     encriptacion(raizActual) {
         let cadena = ""
         if (raizActual != null) {
-            cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+            cadena += "ID: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.id)) + "\n Nombre: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.nombre)) + "\n Edad: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.edad)) +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
             if (raizActual.izquierda != null) {
-                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+                cadena += "ID: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.id)) + "\n Nombre: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.nombre)) + "\n Edad: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.edad)) +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
                 this.encriptacion(raizActual.izquierda)
             }
             if (raizActual.derecha != null) {
-                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+                cadena += "ID: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.id)) + "\n Nombre: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.nombre)) + "\n Edad: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.edad)) +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
                 this.encriptacion(raizActual.derecha)
             }
         }
