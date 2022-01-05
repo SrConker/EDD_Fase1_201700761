@@ -149,6 +149,38 @@ class AVL{
         }
     }
 
+    encriptacion(raizActual) {
+        let cadena = ""
+        if (raizActual != null) {
+            cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+            if (raizActual.izquierda != null) {
+                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+                this.encriptacion(raizActual.izquierda)
+            }
+            if (raizActual.derecha != null) {
+                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad +"\n Correo: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.correo)) + "\n Password: " + sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(raizActual.password))
+                this.encriptacion(raizActual.derecha)
+            }
+        }
+        const elemento = document.getElementById("contenido-encriptado")
+        elemento.innerHTML = cadena
+    }
+
+    desencriptado(raizActual) {
+        let cadena = ""
+        if (raizActual != null) {
+            cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad + "\n Correo: " + raizActual.correo + "\n Password: " + raizActual.password
+            if (raizActual.izquierda != null) {
+                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad + "\n Correo: " + raizActual.correo + "\n Password: " + raizActual.password
+            }
+            if (raizActual.derecha != null) {
+                cadena += "ID: " + raizActual.id + "\n Nombre: " + raizActual.nombre + "\n Edad: " + raizActual.edad + "\n Correo: " + raizActual.correo + "\n Password: " + raizActual.password
+            }
+        }
+        const elemento = document.getElementById("contenido-desencriptado")
+        elemento.innerHTML = cadena
+    }
+
     generarDot() {
         let cadena="digraph arbol {\n"
         cadena += this.generarNodos(this.raiz)
@@ -158,22 +190,8 @@ class AVL{
         const elemento = document.getElementById("contenido-dot")
         elemento.innerHTML = cadena
         console.log(cadena);
-
-        var container = document.getElementById("mynetwork")
-        var parseddata = vis.network.convertDot(cadena)
-        var data = {
-            nodes: parseddata.nodes,
-            edges: parseddata.edges
-        }
-        var options = parseddata.options
-        options.layout = {
-            hierarchical: {
-                sortMethod: 'directed',
-                shakeTowards: 'roots',
-                directions: 'DU'
-            }
-        }
-        var network = new vis.Network(container, data, options)
+        this.encriptacion(this.raiz)
+        this.desencriptado(this.raiz)
     }
 
     generarNodos(raizActual) { //metodo preorden
